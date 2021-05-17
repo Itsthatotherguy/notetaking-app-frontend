@@ -1,0 +1,16 @@
+<nz-card>
+  <div nz-row style="margin-bottom: 8px">
+    {{ note.body }}
+  </div>
+  <div nz-row nzJustify="end">
+    <button
+      nzShape="circle"
+      nzType="text"
+      nzDanger
+      nz-button
+      (click)="onClickDelete()"
+    >
+      <i nz-icon nzType="delete" nzTheme="outline"></i>
+    </button>
+  </div>
+</nz-card>
