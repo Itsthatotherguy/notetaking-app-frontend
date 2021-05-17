@@ -10,11 +10,9 @@ import * as NoteSelectors from './store/note.selectors';
   styleUrls: ['./note.component.css'],
 })
 export class NoteComponent implements OnInit {
-  notes$: Observable<Note[]>;
+  errorsFetchingNotes$: Observable<string[]>;
 
-  constructor(private store: Store) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.notes$ = this.store.pipe(select(NoteSelectors.selectNotes));
-  }
+  ngOnInit(): void {}
 }

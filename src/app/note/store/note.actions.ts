@@ -11,6 +11,11 @@ export const loadNotesSuccess = createAction(
   props<{ notes: Note[] }>()
 );
 
+export const loadNotesFail = createAction(
+  '[Note] Load Notes Fail',
+  props<{ errors: string[] }>()
+);
+
 export const addNoteStart = createAction(
   '[Note] Add Note Start',
   props<{ addNoteRequest: AddNoteRequest }>()
@@ -19,6 +24,11 @@ export const addNoteStart = createAction(
 export const addNoteSuccess = createAction(
   '[Note] Add Note Success',
   props<{ note: Note }>()
+);
+
+export const addNoteFail = createAction(
+  '[Note] Add Note Fail',
+  props<{ errors: string[] }>()
 );
 
 export const updateNoteStart = createAction(
@@ -31,6 +41,11 @@ export const updateNoteSuccess = createAction(
   props<{ note: Update<Note> }>()
 );
 
+export const updateNoteFail = createAction(
+  '[Note] Update Note Fail',
+  props<{ errors: string[] }>()
+);
+
 export const deleteNoteStart = createAction(
   '[Note] Delete Note Start',
   props<{ id: string }>()
@@ -39,4 +54,9 @@ export const deleteNoteStart = createAction(
 export const deleteNoteSuccess = createAction(
   '[Note] Delete Note Success',
   props<{ id: string }>()
+);
+
+export const deleteNoteFail = createAction(
+  '[Note] Delete Note Fail',
+  props<{ errors: string[] }>()
 );

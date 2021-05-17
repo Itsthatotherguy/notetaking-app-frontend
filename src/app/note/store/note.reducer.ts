@@ -60,6 +60,14 @@ export const reducer = createReducer(
     };
   }),
 
+  on(NoteActions.loadNotesFail, (state, { errors }) => {
+    return {
+      ...state,
+      isFetchingNotes: false,
+      errorsFetchingNotes: errors,
+    };
+  }),
+
   on(NoteActions.addNoteStart, (state) => {
     return {
       ...state,
@@ -73,6 +81,14 @@ export const reducer = createReducer(
       ...state,
       isAddingNote: false,
     });
+  }),
+
+  on(NoteActions.addNoteFail, (state, { errors }) => {
+    return {
+      ...state,
+      isAddingNote: false,
+      errorsAddingNote: errors,
+    };
   }),
 
   on(NoteActions.updateNoteStart, (state) => {
@@ -90,6 +106,14 @@ export const reducer = createReducer(
     });
   }),
 
+  on(NoteActions.updateNoteFail, (state, { errors }) => {
+    return {
+      ...state,
+      isUpdatingNote: false,
+      errorsUpdatingNote: errors,
+    };
+  }),
+
   on(NoteActions.deleteNoteStart, (state) => {
     return {
       ...state,
@@ -100,6 +124,14 @@ export const reducer = createReducer(
 
   on(NoteActions.deleteNoteSuccess, (state, { id }) => {
     return adapter.removeOne(id, state);
+  }),
+
+  on(NoteActions.deleteNoteFail, (state, { errors }) => {
+    return {
+      ...state,
+      isDeletingNote: false,
+      errorsDeletingNote: errors,
+    };
   })
 );
 

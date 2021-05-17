@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { concatMap, map } from 'rxjs/operators';
-import { Observable, EMPTY } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
+import { Observable, EMPTY, of } from 'rxjs';
 
 import * as NoteActions from './note.actions';
 import { NoteService } from '../note.service';
@@ -16,6 +16,9 @@ export class NoteEffects {
         return this.noteService.fetchNotes().pipe(
           map((notes) => {
             return NoteActions.loadNotesSuccess({ notes });
+          }),
+          catchError((errors: string[]) => {
+            return of(NoteActions.loadNotesFail({ errors }));
           })
         );
       })
@@ -29,6 +32,9 @@ export class NoteEffects {
         return this.noteService.addNote(action.addNoteRequest).pipe(
           map((note) => {
             return NoteActions.addNoteSuccess({ note });
+          }),
+          catchError((errors: string[]) => {
+            return of(NoteActions.addNoteFail({ errors }));
           })
         );
       })
@@ -49,6 +55,9 @@ export class NoteEffects {
                   changes: { ...note },
                 },
               });
+            }),
+            catchError((errors: string[]) => {
+              return of(NoteActions.updateNoteFail({ errors }));
             })
           );
       })
@@ -62,6 +71,9 @@ export class NoteEffects {
         return this.noteService.deleteNote(action.id).pipe(
           map((id) => {
             return NoteActions.deleteNoteSuccess({ id });
+          }),
+          catchError((errors: string[]) => {
+            return of(NoteActions.deleteNoteFail({ errors }));
           })
         );
       })

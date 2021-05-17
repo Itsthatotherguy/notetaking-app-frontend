@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Note } from '../store/note.models';
-import * as NoteActions from '../store/note.actions';
+import { Note } from '../../store/note.models';
+import * as NoteActions from '../../store/note.actions';
 
 @Component({
   selector: 'app-note-card',

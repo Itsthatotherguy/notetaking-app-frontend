@@ -1,13 +1,3 @@
 <app-create-note-form></app-create-note-form>
 <nz-divider></nz-divider>
-<ng-container *ngIf="notes$ | async as notes">
-  <div nz-row [nzGutter]="8">
-    <div nz-col [nzSpan]="8" *ngFor="let note of notes">
-      <app-note-card [note]="note"></app-note-card>
-    </div>
-  </div>
-  <nz-empty
-    *ngIf="notes.length < 1"
-    nzNotFoundContent="You have no notes at the moment"
-  ></nz-empty>
-</ng-container>
+<app-note-card-grid></app-note-card-grid>

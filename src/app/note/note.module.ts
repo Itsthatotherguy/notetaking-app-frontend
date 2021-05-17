@@ -13,11 +13,18 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NoteCardComponent } from './note-card/note-card.component';
+import { NoteCardComponent } from './note-card-grid/note-card/note-card.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NoteCardGridComponent } from './note-card-grid/note-card-grid.component';
 
 @NgModule({
-  declarations: [NoteComponent, CreateNoteFormComponent, NoteCardComponent],
+  declarations: [
+    NoteComponent,
+    CreateNoteFormComponent,
+    NoteCardComponent,
+    NoteCardGridComponent,
+  ],
   imports: [
     CommonModule,
     StoreModule.forFeature(fromNote.noteFeatureKey, fromNote.reducer),
@@ -30,6 +37,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzCardModule,
     NzEmptyModule,
     NzIconModule,
+    NzSpinModule,
   ],
   exports: [NoteComponent],
 })
