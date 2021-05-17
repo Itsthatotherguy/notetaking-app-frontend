@@ -15,7 +15,6 @@ import { reducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { CoreModule } from './core.module';
-import { SharedModule } from './shared/shared.module';
 import { NoteModule } from './note/note.module';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -44,7 +43,6 @@ const icons: IconDefinition[] = [DeleteOutline];
     }),
     NzGridModule,
     CoreModule,
-    SharedModule,
     NoteModule,
     NzIconModule.forRoot(icons),
     NzLayoutModule,
