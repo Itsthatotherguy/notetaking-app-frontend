@@ -1,0 +1,41 @@
+<nz-modal
+  [nzVisible]="modalIsVisible$ | async"
+  nzTitle="{{ editingMode ? 'Update' : 'Add new' }} note"
+  (nzOnOk)="onClickOk()"
+  (nzOnCancel)="onClickCancel()"
+  [nzOkDisabled]="!noteForm.valid"
+>
+  <form nz-form [formGroup]="noteForm" nzLayout="vertical">
+    <nz-form-item>
+      <nz-form-label>Title</nz-form-label>
+      <nz-form-control [nzErrorTip]="titleErrorTip">
+        <input
+          formControlName="title"
+          nz-input
+          placeholder="Give your note a name ..."
+        />
+        <ng-template #titleErrorTip let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please provide a title.
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Body</nz-form-label>
+      <nz-form-control [nzErrorTip]="bodyErrorTip">
+        <textarea
+          rows="3"
+          formControlName="body"
+          nz-input
+          placeholder="Take a note ..."
+        ></textarea>
+        <ng-template #bodyErrorTip let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please provide a body.
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

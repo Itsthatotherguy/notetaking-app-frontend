@@ -1,3 +1,9 @@
-<app-create-note-form></app-create-note-form>
+<app-error-box
+  *ngIf="errors$ | async as errors"
+  [errors]="errors"
+></app-error-box>
+<app-note-page-header></app-note-page-header>
 <nz-divider></nz-divider>
 <app-note-card-grid></app-note-card-grid>
+<app-loading-modal></app-loading-modal>
+<app-create-note-modal></app-create-note-modal>

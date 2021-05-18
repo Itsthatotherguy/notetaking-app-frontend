@@ -1,0 +1,11 @@
+<nz-modal
+  [nzVisible]="isVisible$ | async"
+  nzCentered
+  [nzClosable]="false"
+  [nzFooter]="null"
+  [nzBodyStyle]="modalBodyStyle"
+>
+  <div *nzModalContent class="test">
+    <nz-spin nzTip="Loading ..."></nz-spin>
+  </div>
+</nz-modal>

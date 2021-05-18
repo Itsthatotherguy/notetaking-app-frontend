@@ -6,14 +6,10 @@ import { Note } from './note.models';
 export const noteFeatureKey = 'note';
 
 export interface State extends EntityState<Note> {
-  isFetchingNotes: boolean;
-  isAddingNote: boolean;
-  isUpdatingNote: boolean;
-  isDeletingNote: boolean;
-  errorsFetchingNotes: string[];
-  errorsAddingNote: string[];
-  errorsUpdatingNote: string[];
-  errorsDeletingNote: string[];
+  isLoading: boolean;
+  errors: string[];
+  editingNoteId: string;
+  isCreateNoteModalOpen: boolean;
 }
 
 const sortByCreatedAt = (a: Note, b: Note): number => {
@@ -31,14 +27,10 @@ export const adapter = createEntityAdapter<Note>({
 });
 
 export const initialState = adapter.getInitialState({
-  isFetchingNotes: false,
-  isAddingNote: false,
-  isUpdatingNote: false,
-  isDeletingNote: false,
-  errorsFetchingNotes: null,
-  errorsAddingNote: null,
-  errorsUpdatingNote: null,
-  errorsDeletingNote: null,
+  isLoading: false,
+  errors: null,
+  editingNoteId: null,
+  isCreateNoteModalOpen: false,
 });
 
 export const reducer = createReducer(
@@ -47,90 +39,130 @@ export const reducer = createReducer(
   on(NoteActions.loadNotesStart, (state) => {
     return {
       ...state,
-      isFetchingNotes: true,
-      errorsFetchingNotes: null,
+      isLoading: true,
+      errors: null,
     };
   }),
 
   on(NoteActions.loadNotesSuccess, (state, { notes }) => {
-    return {
+    return adapter.setAll(notes, {
       ...state,
-      isFetchingNotes: false,
-      notes,
-    };
+      isLoading: false,
+    });
   }),
 
   on(NoteActions.loadNotesFail, (state, { errors }) => {
     return {
       ...state,
-      isFetchingNotes: false,
-      errorsFetchingNotes: errors,
+      isLoading: false,
+      errors,
     };
   }),
 
   on(NoteActions.addNoteStart, (state) => {
     return {
       ...state,
-      isAddingNote: true,
-      errorsAddingNote: null,
+      isLoading: true,
+      errors: null,
     };
   }),
 
   on(NoteActions.addNoteSuccess, (state, { note }) => {
     return adapter.addOne(note, {
       ...state,
-      isAddingNote: false,
+      isLoading: false,
+      isCreateNoteModalOpen: false,
+      editingNoteId: null,
     });
   }),
 
   on(NoteActions.addNoteFail, (state, { errors }) => {
     return {
       ...state,
-      isAddingNote: false,
-      errorsAddingNote: errors,
+      isLoading: false,
+      errors,
+      isCreateNoteModalOpen: false,
+      editingNoteId: null,
     };
   }),
 
   on(NoteActions.updateNoteStart, (state) => {
     return {
       ...state,
-      isUpdatingNote: false,
-      errorsUpdatingNote: null,
+      isLoading: true,
+      errors: null,
     };
   }),
 
   on(NoteActions.updateNoteSuccess, (state, { note }) => {
     return adapter.updateOne(note, {
       ...state,
-      isUpdatingNote: false,
+      isLoading: false,
+      isCreateNoteModalOpen: false,
+      editingNoteId: null,
     });
   }),
 
   on(NoteActions.updateNoteFail, (state, { errors }) => {
     return {
       ...state,
-      isUpdatingNote: false,
-      errorsUpdatingNote: errors,
+      isLoading: false,
+      errors,
+      isCreateNoteModalOpen: false,
+      editingNoteId: null,
     };
   }),
 
   on(NoteActions.deleteNoteStart, (state) => {
     return {
       ...state,
-      isDeletingNote: true,
-      errorsDeletingNote: null,
+      isLoading: true,
+      errors: null,
     };
   }),
 
   on(NoteActions.deleteNoteSuccess, (state, { id }) => {
-    return adapter.removeOne(id, state);
+    return adapter.removeOne(id, {
+      ...state,
+      isLoading: false,
+    });
   }),
 
   on(NoteActions.deleteNoteFail, (state, { errors }) => {
     return {
       ...state,
-      isDeletingNote: false,
-      errorsDeletingNote: errors,
+      isLoading: false,
+      errors,
+    };
+  }),
+
+  on(NoteActions.openCreateNoteModal, (state) => {
+    return {
+      ...state,
+      isCreateNoteModalOpen: true,
+    };
+  }),
+
+  on(NoteActions.closeCreateNoteModal, (state) => {
+    return {
+      ...state,
+      isCreateNoteModalOpen: false,
+    };
+  }),
+
+  on(NoteActions.openUpdateNoteModal, (state, { id }) => {
+    return {
+      ...state,
+      isCreateNoteModalOpen: true,
+      editingNoteId: id,
+    };
+  }),
+
+  on(NoteActions.closeUpdateNoteModal, (state) => {
+    return {
+      ...state,
+      isCreateNoteModalOpen: false,
+      editingNoteId: null,
     };
   })
 );

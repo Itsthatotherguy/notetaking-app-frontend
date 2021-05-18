@@ -19,22 +19,29 @@ import { NoteModule } from './note/note.module';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { DeleteOutline } from '@ant-design/icons-angular/icons';
+import {
+  DeleteOutline,
+  MoreOutline,
+  EditOutline,
+} from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { AppRoutingModule } from './app-routing.module';
+import { AppEffects } from './reducers/app.effects';
 
 registerLocaleData(en);
 
-const icons: IconDefinition[] = [DeleteOutline];
+const icons: IconDefinition[] = [DeleteOutline, MoreOutline, EditOutline];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AppEffects]),
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreDevtoolsModule.instrument({

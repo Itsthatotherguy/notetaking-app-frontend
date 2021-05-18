@@ -11,6 +11,10 @@ import * as NoteActions from '../../store/note.actions';
 export class NoteCardComponent {
   @Input() note: Note;
 
+  cardBodyStyle = {
+    flexGrow: 1,
+  };
+
   constructor(private store: Store) {}
 
   onClickDelete(): void {

@@ -33,7 +33,7 @@ export const addNoteFail = createAction(
 
 export const updateNoteStart = createAction(
   '[Note] Update Note Start',
-  props<{ id: string; updateNoteRequest: UpdateNoteRequest }>()
+  props<{ updateNoteRequest: UpdateNoteRequest }>()
 );
 
 export const updateNoteSuccess = createAction(
@@ -59,4 +59,21 @@ export const deleteNoteSuccess = createAction(
 export const deleteNoteFail = createAction(
   '[Note] Delete Note Fail',
   props<{ errors: string[] }>()
+);
+
+export const openCreateNoteModal = createAction(
+  '[Note] Open Create Note Modal'
+);
+
+export const closeCreateNoteModal = createAction(
+  '[Note] Close Create Note Modal'
+);
+
+export const openUpdateNoteModal = createAction(
+  '[Note] Open Update Note Modal',
+  props<{ id: string }>()
+);
+
+export const closeUpdateNoteModal = createAction(
+  '[Note] Close Update Note Modal'
 );

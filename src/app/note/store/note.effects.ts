@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 
-import { catchError, concatMap, map } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  map,
+  mergeMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import * as NoteActions from './note.actions';
+import * as NoteSelectors from './note.selectors';
 import { NoteService } from '../note.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class NoteEffects {
@@ -41,12 +51,27 @@ export class NoteEffects {
     );
   });
 
+  addNoteSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(NoteActions.addNoteSuccess),
+        tap(() => {
+          this.message.success('Note successfully added.');
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   updateNote$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(NoteActions.updateNoteStart),
-      concatMap((action) => {
+      withLatestFrom(
+        this.store.pipe(select(NoteSelectors.selectEditingNoteId))
+      ),
+      concatMap(([action, editingNoteId]) => {
         return this.noteService
-          .updateNote(action.id, action.updateNoteRequest)
+          .updateNote(editingNoteId, action.updateNoteRequest)
           .pipe(
             map((note) => {
               return NoteActions.updateNoteSuccess({
@@ -64,12 +89,24 @@ export class NoteEffects {
     );
   });
 
+  updateNoteBodySuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(NoteActions.updateNoteSuccess),
+        tap(() => {
+          this.message.success('Note successfully updated.');
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   deleteNote$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(NoteActions.deleteNoteStart),
       concatMap((action) => {
         return this.noteService.deleteNote(action.id).pipe(
-          map((id) => {
+          map(({ id }) => {
             return NoteActions.deleteNoteSuccess({ id });
           }),
           catchError((errors: string[]) => {
@@ -80,5 +117,22 @@ export class NoteEffects {
     );
   });
 
-  constructor(private actions$: Actions, private noteService: NoteService) {}
+  deleteNoteSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(NoteActions.deleteNoteSuccess),
+        tap(() => {
+          this.message.success('Note successfully deleted.');
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private noteService: NoteService,
+    private message: NzMessageService,
+    private store: Store
+  ) {}
 }

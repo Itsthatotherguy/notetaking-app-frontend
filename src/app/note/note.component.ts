@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Note } from './store/note.models';
+import * as NoteActions from './store/note.actions';
 import * as NoteSelectors from './store/note.selectors';
 
 @Component({
@@ -10,9 +10,13 @@ import * as NoteSelectors from './store/note.selectors';
   styleUrls: ['./note.component.css'],
 })
 export class NoteComponent implements OnInit {
-  errorsFetchingNotes$: Observable<string[]>;
+  errors$: Observable<string[]>;
 
-  constructor() {}
+  constructor(private store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.errors$ = this.store.pipe(select(NoteSelectors.selectErrors));
+
+    this.store.dispatch(NoteActions.loadNotesStart());
+  }
 }

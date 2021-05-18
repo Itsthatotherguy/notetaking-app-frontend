@@ -1,0 +1,54 @@
+<app-http-warning></app-http-warning>
+<h3 nz-typography style="text-align: center">Login</h3>
+<app-error-box
+  *ngIf="errors$ | async as errors"
+  [errors]="errors"
+></app-error-box>
+<form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTip">
+      <nz-input-group>
+        <input nz-input formControlName="email" placeholder="Email" />
+        <ng-template #emailErrorTip let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please provide your email address
+          </ng-container>
+          <ng-container *ngIf="control.hasError('email')">
+            Please provide a valid email address
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTip">
+      <nz-input-group>
+        <input
+          nz-input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+        <ng-template #passwordErrorTip let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please provide your password
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <button
+      nz-button
+      type="submit"
+      nzType="primary"
+      [nzLoading]="isLoggingIn$ | async"
+      [disabled]="!loginForm.valid"
+    >
+      Login
+    </button>
+  </nz-form-item>
+</form>
+<p nz-typography>
+  Don't have an account yet? <a routerLink="../signup">Sign up</a> here.
+</p>

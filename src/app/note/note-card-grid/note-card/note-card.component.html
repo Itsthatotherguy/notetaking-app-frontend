@@ -1,16 +1,16 @@
-<nz-card>
-  <div nz-row style="margin-bottom: 8px">
-    {{ note.body }}
-  </div>
-  <div nz-row nzJustify="end">
-    <button
-      nzShape="circle"
-      nzType="text"
-      nzDanger
-      nz-button
-      (click)="onClickDelete()"
-    >
-      <i nz-icon nzType="delete" nzTheme="outline"></i>
-    </button>
+<nz-card
+  nzTitle="{{ note.title }}"
+  [nzExtra]="actions"
+  [nzBodyStyle]="cardBodyStyle"
+>
+  <div class="card-content">
+    <p nz-typography class="body">{{ note.body }}</p>
+    <p nz-typography nzType="secondary">{{ note.createdAt }}</p>
   </div>
 </nz-card>
+
+<ng-template #actions>
+  <app-note-card-action-dropdown
+    [noteId]="note.id"
+  ></app-note-card-action-dropdown>
+</ng-template>

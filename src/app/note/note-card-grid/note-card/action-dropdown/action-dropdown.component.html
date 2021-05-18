@@ -1,0 +1,14 @@
+<button nz-button nz-dropdown [nzDropdownMenu]="menu">
+  <i nz-icon nzType="more" nzTheme="outline"></i>
+</button>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li nz-menu-item (click)="onClickEdit()">
+      <i nz-icon nzType="edit" nzTheme="outline"></i>Edit
+    </li>
+    <li nz-menu-item (click)="onClickDelete()">
+      <i nz-icon nzType="delete" nzTheme="outline"></i>Delete
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -5,10 +5,6 @@
     </div>
   </div>
 
-  <div class="loading-spinner__container">
-    <nz-spin *ngIf="isFetchingNotes$ | async"></nz-spin>
-  </div>
-
   <nz-empty
     *ngIf="notes.length < 1"
     nzNotFoundContent="You have no notes at the moment"

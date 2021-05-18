@@ -1,0 +1,11 @@
+<nz-alert
+  nzType="error"
+  nzMessage="The following errors occured:"
+  [nzDescription]="errorList"
+  class="alert-box"
+></nz-alert>
+<ng-template #errorList>
+  <ul>
+    <li *ngFor="let error of errors">{{ error }}</li>
+  </ul>
+</ng-template>
